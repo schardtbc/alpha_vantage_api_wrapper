@@ -1,5 +1,5 @@
 {
-  "name": "alpha_vantage_api_wrapper",
+  "name": "ts-package-template",
   "version": "1.0.0",
   "description": "ts-package-tempate Description",
   "main": "./lib/index.js",
@@ -17,15 +17,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/schardtbc/alpha_vantage_api_wrapper.git"
+    "url": "git+https://github.com/schardtbc/ts-package-template.git"
   },
   "keywords": [],
   "author": "Bruce C. Schardt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/schardtbc/alpha_vantage_api_wrapper/issues"
+    "url": "https://github.com/schardtbc/ts-package-template/issues"
   },
-  "homepage": "https://github.com/schardtbc/alpha_vantage_api_wrapper#readme",
+  "homepage": "https://github.com/schardtbc/ts-package-template#readme",
   "devDependencies": {
     "@types/jest": "23.3.11",
     "jest": "23.6.0",
