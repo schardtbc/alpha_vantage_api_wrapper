@@ -39,7 +39,5 @@
   "files": [
     "lib/**/*"
   ],
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }
