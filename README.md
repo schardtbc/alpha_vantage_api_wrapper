@@ -103,9 +103,9 @@ yourCallbackFnc =  async (symbol) => {
 
 ```javascript
 export declare class AlphaVantage {
-    static intraday: (symbol: string, interval?: string) => Promise<any>;
-    static historical: (symbol: string) => Promise<any>;
-    static historicalAdj: (symbol: string) => Promise<any>;
+    static intraday: (symbol: string, interval?: string, outputsize?: string) => Promise<any>;
+    static daily: (symbol: string, outputsize?: string) => Promise<any>;
+    static dailyAdjusted: (symbol: string, outputsize?: string) => Promise<any>;
     static quote: (symbol: string) => Promise<any>;
     static macd: (symbol: string, interval?: string, series?: string) => Promise<any>;
     static forexDaily: (fromSymbol: string, toSymbol: string) => Promise<any>;
