@@ -1,17 +1,17 @@
 import * as avc from "./avc";
 
 export class AlphaVantage {
-  public static intraday = avc.avIntraday;
+  public static intraday = avc.intraday;
 
-  public static historical = avc.avHistory;
+  public static daily = avc.daily;
 
-  public static historicalAdj = avc.avHistoryAdj;
+  public static dailyAdjusted = avc.dailyAdjusted;
 
-  public static quote = avc.avQuote;
+  public static quote = avc.quote;
 
-  public static macd = avc.avMACD
+  public static macd = avc.MACD
 
-  public static forexDaily = avc.avForexDaily
+  public static forexDaily = avc.forexDaily
 
-  public static forexExchangeRate = avc.avForexExchangeRate
+  public static forexExchangeRate = avc.forexExchangeRate
 }

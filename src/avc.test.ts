@@ -1,12 +1,12 @@
-import { avForexDaily, avForexExchangeRate, avHistory, avHistoryAdj, avIntraday, avMACD, avQuote, toCamelCase } from "./avc";
+import {  daily, dailyAdjusted,  forexDaily, forexExchangeRate, intraday, MACD, quote, toCamelCase } from "./avc";
 
 test("toCamelCase()", () => {
   expect(toCamelCase("2. MACD_Hist")).toEqual("MACDHist")
 })
 
 
-test("avClient Quote() works with async await()", async () => {
-  const res = await avQuote("AAPL");
+test("quote() works with async await()", async () => {
+  const res = await quote("AAPL");
   expect(res).toEqual(
     expect.objectContaining({
       symbol: expect.any(String),
@@ -23,8 +23,8 @@ test("avClient Quote() works with async await()", async () => {
   );
 },18000);
 
-test("avIntraday() works with async await()", async () => {
-  const res = await avIntraday("AAPL");
+test("intraday() works with async await()", async () => {
+  const res = await intraday("AAPL");
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -39,8 +39,8 @@ test("avIntraday() works with async await()", async () => {
   );
 },18000);
 
-test("avHistory() works with async await()", async () => {
-  const res = await avHistory("AAPL");
+test("daily() works with async await()", async () => {
+  const res = await daily("AAPL");
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -55,8 +55,8 @@ test("avHistory() works with async await()", async () => {
   );
 },18000);
 
-test("avHistoryAdj() works with async await()", async () => {
-  const res = await avHistoryAdj("AAPL");
+test("dailyAdjusted() works with async await()", async () => {
+  const res = await dailyAdjusted("AAPL");
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -74,8 +74,8 @@ test("avHistoryAdj() works with async await()", async () => {
   );
 },18000);
 
-test("avForexDaily() works with async await()", async () => {
-  const res = await avForexDaily("EUR","USD");
+test("forexDaily() works with async await()", async () => {
+  const res = await forexDaily("EUR","USD");
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -89,8 +89,8 @@ test("avForexDaily() works with async await()", async () => {
   );
 },18000);
 
-test("avForexExchangeRate() works with async await()", async () => {
-  const res = await avForexExchangeRate("EUR","USD");
+test("forexExchangeRate() works with async await()", async () => {
+  const res = await forexExchangeRate("EUR","USD");
   expect(res).toEqual(
       expect.objectContaining({
         "fromCurrencyCode": expect.any(String),
@@ -104,8 +104,8 @@ test("avForexExchangeRate() works with async await()", async () => {
   );
 },18000);
 
-test("avMACD() works with async await()", async () => {
-  const res = await avMACD("AAPL");
+test("MACD() works with async await()", async () => {
+  const res = await MACD("AAPL");
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({

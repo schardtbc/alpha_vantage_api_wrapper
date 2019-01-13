@@ -34,8 +34,8 @@ test("intraday() works with async await()", async () =>{
     )
 },18000);
 
-test("historical() works with async await()", async () =>{
-    const res  = await AlphaVantage.historical("AAPL");
+test("daily() works with async await()", async () =>{
+    const res  = await AlphaVantage.daily("AAPL");
     expect(res).toEqual(expect.arrayContaining([
         expect.objectContaining({
         "dateTime": expect.any(String),
@@ -50,8 +50,8 @@ test("historical() works with async await()", async () =>{
     )
 },18000);
 
-test("historicalAdj() works with async await()", async () =>{
-    const res  = await AlphaVantage.historicalAdj("AAPL");
+test("dailyAdjusted() works with async await()", async () =>{
+    const res  = await AlphaVantage.dailyAdjusted("AAPL");
         expect(res).toEqual(expect.arrayContaining([
                 expect.objectContaining({
                     "dateTime": expect.any(String),
