@@ -1,8 +1,11 @@
 # alpha_vantage_api_wrapper
 
+[![CircleCI](https://circleci.com/gh/schardtbc/alpha_vantage_api_wrapper.svg?style=svg)](https://circleci.com/gh/schardtbc/alpha_vantage_api_wrapper)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest) 
 [![jest](https://jestjs.io/img/jest-badge.svg)](https://github.com/facebook/jest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Note: one of 12 test @CircleCI. I believe this is due to rate limiting at the target. I need to understand a work arround for this issue... That specific test passes when run locally.
 
 https://www.alphavantage.co/documentation/
 
@@ -20,7 +23,7 @@ Reminder not to include the .env file in your public repositories.
 Alpha Advantage is rate limited to 5 requests to minute and 500 total requests per day. They enforce these limits. So the wrapper
 Inside the wrapper the rate limiting is enforced by the Bottleneck package.
 
-The rate limiter is setup is hard coded as follows
+The rate limiter is setup is hard coded as follows:
 
 ```
 const limiter = new Bottleneck({
