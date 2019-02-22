@@ -73,7 +73,7 @@ export const permuteToArray = (objIn: { [k: string]: any }) => {
     (acc, key) => {
       acc.push({ dateTime: key, ...objIn[key] });
       return acc;
-    }, Object()
+    }, Array[0]
   );
   return result;
 };
@@ -101,7 +101,7 @@ export const quote = async (symbol: string) => {
   const endpoint = `GLOBAL_QUOTE&symbol=${symbol}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeQuoteData(data);
-  return data.slice(1,data.length-1);
+  return data
 };
 
 export const daily = async (symbol: string, outputsize: string = 'compact') => {
