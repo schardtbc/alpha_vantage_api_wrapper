@@ -12,6 +12,10 @@ const apiKey = `&apikey=${av_api_key}`;
 
 const baseURL = "https://www.alphavantage.co/query?function=";
 
+interface KVP {
+  [k: string]: any;
+}
+
 const limiter = new Bottleneck({
     maxConcurrent: 1,
     minTime: 17 * 1000,
@@ -69,8 +73,7 @@ export const permuteToArray = (objIn: { [k: string]: any }) => {
     (acc, key) => {
       acc.push({ dateTime: key, ...objIn[key] });
       return acc;
-    },
-    [new Array(0)]
+    }, Object()
   );
   return result;
 };
@@ -98,47 +101,49 @@ export const quote = async (symbol: string) => {
   const endpoint = `GLOBAL_QUOTE&symbol=${symbol}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeQuoteData(data);
-  return data;
+  return data.slice(1,data.length-1);
 };
 
 export const daily = async (symbol: string, outputsize: string = 'compact') => {
   const endpoint = `TIME_SERIES_DAILY&symbol=${symbol}&outputsize=${outputsize}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series (Daily)");
-  return data;
+  data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
+  return data.slice(1,data.length-1);
 };
 
 export const dailyAdjusted = async (symbol: string, outputsize: string = 'compact') => {
   const endpoint = `TIME_SERIES_DAILY_ADJUSTED&symbol=${symbol}&outputsize=${outputsize}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series (Daily)");
-  return data;
+  data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
+  return data.slice(1,data.length-1);
 };
 
 export const intraday = async (symbol: string, interval: string = "1min", outputsize: string = 'compact') => {
   const endpoint = `TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}&outputsize=${outputsize}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,`Time Series (${interval})`);
-  return data;
+  return data.slice(1,data.length-1);
 };
 
 export const MACD = async (symbol: string, interval: string = "daily", series: string = "close") => {
   const endpoint = `MACD&symbol=${symbol}&interval=${interval}&series_type=${series}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Technical Analysis: MACD");
-  return data;
+  return data.slice(1,data.length-1);
 };
 
 export const forexDaily = async (fromSymbol: string, toSymbol: string) => {
   const endpoint = `FX_DAILY&from_symbol=${fromSymbol}&to_symbol=${toSymbol}&interval=1min`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series FX (Daily)");
-  return data;
+  return data.slice(1,data.length-1);
 };
 
 export const forexExchangeRate = async (fromSymbol: string, toSymbol: string) => {
   const endpoint = `CURRENCY_EXCHANGE_RATE&from_currency=${fromSymbol}&to_currency=${toSymbol}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeForexExchangeRateData(data);
-  return data;
+  return data.slice(1,data.length-1);
 };
