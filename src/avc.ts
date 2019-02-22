@@ -69,11 +69,11 @@ export const renameKeysWith = (
 };
 
 export const permuteToArray = (objIn: { [k: string]: any }) => {
-  const result = Object.keys(objIn).reduce<[any]>(
+  const result = Object.keys(objIn).reduce<any[]>(
     (acc, key) => {
       acc.push({ dateTime: key, ...objIn[key] });
       return acc;
-    }, Array[0]
+    }, Array(0)
   );
   return result;
 };
@@ -131,19 +131,19 @@ export const MACD = async (symbol: string, interval: string = "daily", series: s
   const endpoint = `MACD&symbol=${symbol}&interval=${interval}&series_type=${series}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Technical Analysis: MACD");
-  return data.slice(1,data.length-1);
+  return data
 };
 
 export const forexDaily = async (fromSymbol: string, toSymbol: string) => {
   const endpoint = `FX_DAILY&from_symbol=${fromSymbol}&to_symbol=${toSymbol}&interval=1min`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series FX (Daily)");
-  return data.slice(1,data.length-1);
+  return data;
 };
 
 export const forexExchangeRate = async (fromSymbol: string, toSymbol: string) => {
   const endpoint = `CURRENCY_EXCHANGE_RATE&from_currency=${fromSymbol}&to_currency=${toSymbol}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeForexExchangeRateData(data);
-  return data.slice(1,data.length-1);
+  return data
 };
