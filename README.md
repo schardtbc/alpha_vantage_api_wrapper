@@ -20,18 +20,34 @@ Reminder not to include the .env file in your public repositories.
 
 # Rate limiting
 
-Alpha Advantage is rate limited to 5 requests to minute and 500 total requests per day. They enforce these limits. So the wrapper
+Alpha Advantage is rate limited. The free tier of serivce is limited to 5 requests per minute and 500 total requests per day. Paid tiers are rate limited to 30 || 120 || 300 || 600 || 1200 requests per minute with no maximum on requests per day. 
+
+They enforce these limits.
 Inside the wrapper the rate limiting is enforced by the Bottleneck package.
 
-The rate limiter is setup is hard coded as follows:
+Two environment keys allow you to control the rate limiter.
 
 ```
+# rate == max requests/min
+# limit == max requests/day
+ALPHA_VANTAGE_RATE
+ALPHA_VANTAGE_LIMIT
+```
+
+```
+// free tier rate limiter
 const limiter = new Bottleneck({
-    maxConcurrent: 1,
+    maxConcurrent: 4,
     minTime: 17 * 1000,
     reservoir: 500, // initial value
     reservoirRefreshAmount: 500,
     reservoirRefreshInterval: 24 * 60 * 60 * 1000 + 10000// must be divisible by 250
+})
+
+// 120 requests/min tier rate limiter
+const limiter = new Bottleneck({
+    maxConcurrent: 4,
+    minTime: 505,
 })
 ```
 # Restructured Data

@@ -6,9 +6,13 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-const av_api_key = process.env.ALPHA_VANTAGE_API_KEY;
-
-const apiKey = `&apikey=${av_api_key}`;
+const avApiKey = process.env.ALPHA_VANTAGE_API_KEY;
+const avRateS = process.env.ALPHA_VANTAGE_RATE;
+const avRate = avRateS?parseInt(avRateS,10):5
+const avMinTime = 60000/avRate +5;
+const avLimitS = process.env.ALPHA_VANTAGE_LIMIT;
+const avLimit = avLimitS?parseInt(avLimitS,10):500
+const apiKey = `&apikey=${avApiKey}`;
 
 const baseURL = "https://www.alphavantage.co/query?function=";
 
@@ -16,13 +20,24 @@ interface KVP {
   [k: string]: any;
 }
 
-const limiter = new Bottleneck({
-    maxConcurrent: 1,
-    minTime: 17 * 1000,
-    reservoir: 500, // initial value
-    reservoirRefreshAmount: 500,
-    reservoirRefreshInterval: 24 * 60 * 60 * 1000 + 10000// must be divisible by 250
-})
+const makeLimiter = (mt: number, lmt: number=0) => {
+  if (lmt === 0) {
+    return new Bottleneck({
+      maxConcurrent: 4,
+      minTime: mt
+  })
+  } else {
+    return new Bottleneck({
+      maxConcurrent: 4,
+      minTime: mt,
+      reservoir: lmt, // initial value
+      reservoirRefreshAmount: lmt,
+      reservoirRefreshInterval: 24*60*60 * 1000, // mu
+  })   
+  }
+}
+
+const limiter = makeLimiter(avMinTime,avLimit)
 
 export const toCamelCase = (str: string) => {
   let tmp = str
