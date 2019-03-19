@@ -57,6 +57,7 @@ test("daily() works with async await()", async () => {
 
 test("dailyAdjusted() works with async await()", async () => {
   const res = await dailyAdjusted("AAPL");
+  // console.log(res.slice(0,3))
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({

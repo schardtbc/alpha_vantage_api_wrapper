@@ -124,7 +124,7 @@ export const daily = async (symbol: string, outputsize: string = 'compact') => {
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series (Daily)");
   data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
-  return data.slice(1,data.length-1);
+  return data.slice(0,data.length-1);
 };
 
 export const dailyAdjusted = async (symbol: string, outputsize: string = 'compact') => {
@@ -132,14 +132,14 @@ export const dailyAdjusted = async (symbol: string, outputsize: string = 'compac
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,"Time Series (Daily)");
   data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
-  return data.slice(1,data.length-1);
+  return data.slice(0,data.length-1);
 };
 
 export const intraday = async (symbol: string, interval: string = "1min", outputsize: string = 'compact') => {
   const endpoint = `TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}&outputsize=${outputsize}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,`Time Series (${interval})`);
-  return data.slice(1,data.length-1);
+  return data.slice(0,data.length-1);
 };
 
 export const MACD = async (symbol: string, interval: string = "daily", series: string = "close") => {
