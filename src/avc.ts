@@ -139,6 +139,7 @@ export const intraday = async (symbol: string, interval: string = "1min", output
   const endpoint = `TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${interval}&outputsize=${outputsize}`;
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,`Time Series (${interval})`);
+  data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
   return data.slice(0,data.length-1);
 };
 
