@@ -24,10 +24,12 @@ test("quote() works with async await()", async () => {
 },18000);
 
 test("intraday() works with async await()", async () => {
-  const res = await intraday("AAPL");
+  const res = await intraday("AAPL","1min","full");
+  console.log(res.slice(0,10));
   expect(res).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
+        symbol: expect.any(String),
         dateTime: expect.any(String),
         open: expect.any(Number),
         high: expect.any(Number),

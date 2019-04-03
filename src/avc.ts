@@ -140,7 +140,7 @@ export const intraday = async (symbol: string, interval: string = "1min", output
   let data = await limiter.schedule( () => axios.get(baseURL + endpoint + apiKey).then(res => res.data));
   data = reshapeDataOn(data,`Time Series (${interval})`);
   data = data.map( (o: KVP) => {o.symbol = symbol; return o;})
-  return data.slice(0,data.length-1);
+  return data;
 };
 
 export const MACD = async (symbol: string, interval: string = "daily", series: string = "close") => {
