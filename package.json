@@ -41,7 +41,7 @@
   ],
   "dependencies": {
     "@types/dotenv": "6.1.0",
-    "axios": "0.18.0",
+    "axios": "0.18.1",
     "bottleneck": "git+https://git@github.com/SGrondin/bottleneck.git",
     "dotenv": "6.2.0"
   }
